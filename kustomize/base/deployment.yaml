@@ -1,0 +1,98 @@
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: motivational-quotes-app
+#   labels:
+#     app: motivational-quotes
+# spec:
+#   replicas: 3
+#   selector:
+#     matchLabels:
+#       app: motivational-quotes
+#   strategy:
+#     type: RollingUpdate
+#     rollingUpdate:
+#       maxSurge: 1
+#       maxUnavailable: 1
+#   template:
+#     metadata:
+#       labels:
+#         app: motivational-quotes
+#     spec:
+#       containers:
+#       - name: motivational-quotes-container
+#         image: yourdockerhub/motivational-quotes:1.0
+#         ports:
+#         - containerPort: 80
+#         resources:
+#           requests:
+#             memory: "128Mi"
+#             cpu: "250m"
+#           limits:
+#             memory: "256Mi"
+#             cpu: "500m"
+#         livenessProbe:
+#           httpGet:
+#             path: /
+#             port: 80
+#           initialDelaySeconds: 15
+#           periodSeconds: 20
+#         readinessProbe:
+#           httpGet:
+#             path: /
+#             port: 80
+#           initialDelaySeconds: 5
+#           periodSeconds: 20
+#         env:
+#         - name: NODE_ENV
+#           value: production
+#       securityContext:
+#         runAsNonRoot: true
+#         runAsUser: 1000
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-name-placeholder
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app-label-placeholder
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: app-label-placeholder
+    spec:
+      containers:
+      - name: container-name-placeholder
+        image: image-url-placeholder:tag-placeholder
+        ports:
+        - containerPort: port-placeholder
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: port-placeholder
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: port-placeholder
+          initialDelaySeconds: 5
+          periodSeconds: 20
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
