@@ -1,7 +1,17 @@
 apiVersion: s3.services.k8s.aws/v1alpha1
 kind: Bucket
 metadata:
-  name: bucket-ack
+  name: mnl-test-gyphy-argo-ack
 spec:
-  name: mi-test-mnl-ack-py-unico-12345
-  region: us-east-1
+  name: mnl-test-gyphy-argo-ack
+  acl: "private"
+  lifecycle:
+    rules:
+    - id: "ExpireOldObjects"
+      status: "Enabled"
+      expiration:
+        days: 365
+  tagging:
+    tagSet:
+    - key: "Environment"
+      value: "Production"
