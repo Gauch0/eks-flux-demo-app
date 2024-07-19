@@ -3,29 +3,6 @@ kind: Kustomization
 
 # Incluyendo recursos base y remotos
 resources:
-- https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.10.1/deploy/static/provider/aws/deploy.yaml
 - base/
 - namespace.yaml
 
-images:
-- name: yourdockerhub/motivational-quotes
-  newName: <accout_id>.dkr.ecr.us-east-1.amazonaws.com/<name>
-  newTag: v1
-
-
-configMapGenerator:
-- name: hello-app-config
-  literals:
-  - OPTION=VALUE
-
-commonLabels:
-  app: hello-app
-  component: web
-
-patchesStrategicMerge:
-- patch-deployment.yaml
-
-labels:
-- includeSelectors: true
-  pairs:
-    owner: MNL

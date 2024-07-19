@@ -1,46 +1,22 @@
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
-# metadata:
-#   name: motivational-quotes-ingress
-#   annotations:
-#     nginx.ingress.kubernetes.io/ssl-redirect: "true"
-# spec:
-#   ingressClassName: nginx
-#   rules:
-#   - host: quotes.example.com
-#     http:
-#       paths:
-#       - path: /
-#         pathType: Prefix
-#         backend:
-#           service:
-#             name: motivational-quotes-service
-#             port:
-#               number: 80
-#   tls:
-#   - hosts:
-#     - quotes.example.com
-#     secretName: quotes-tls
-
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ingress-name-placeholder
+  name: flask-app-ingress
+  namespace: ms
   annotations:
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/backend-protocol: HTTP
+    alb.ingress.kubernetes.io/healthcheck-path: /
 spec:
+  ingressClassName: alb
   rules:
-  - host: host-placeholder
-    http:
+  - http:
       paths:
-      - path: path-placeholder
-        pathType: Prefix
+      - path: /*
+        pathType: ImplementationSpecific
         backend:
           service:
-            name: service-name-placeholder
+            name: flask-app-service
             port:
-              number: external-port-placeholder
-  tls:
-  - hosts:
-    - host-placeholder
-    secretName: tls-secret-name-placeholder
+              number: 80
